@@ -18,7 +18,7 @@ Resources:
                   - 
                     ObjectOwnership: "BucketOwnerEnforced"
             PublicAccessBlockConfiguration: 
-                BlockPublicAcls: false
+                BlockPublicAcls: true
                 BlockPublicPolicy: true
                 IgnorePublicAcls: true
                 RestrictPublicBuckets: true
