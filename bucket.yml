@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "former2"
+Description: ""
+Resources:
+    S3Bucket:
+        Type: "AWS::S3::Bucket"
+        Properties:
+            BucketName: "awskeypairsss1"
+            BucketEncryption: 
+                ServerSideEncryptionConfiguration: 
+                  - 
+                    ServerSideEncryptionByDefault: 
+                        SSEAlgorithm: "AES256"
+                    BucketKeyEnabled: true
+            OwnershipControls: 
+                Rules: 
+                  - 
+                    ObjectOwnership: "BucketOwnerEnforced"
+            PublicAccessBlockConfiguration: 
+                BlockPublicAcls: true
+                BlockPublicPolicy: true
+                IgnorePublicAcls: true
+                RestrictPublicBuckets: true
+
