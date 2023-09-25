@@ -1,0 +1,132 @@
+\creat\l              List available databases
+\dt             List available tables
+\d tablename    Describe a table
+\df             List available functions
+\dn             List available schema
+\du             List users and their roles
+\dv             List available views 
+ SELECT version();   
+ \g             It will repeat the previous command
+\h              help
+\e              edit the command in editor
+\q              quit
+\db             tablepsaces
+\dt public.*    In a particular schema: 
+\dt *.*         In all schemas
+VACUUM (VERBOSE, ANALYZE); TO REMOVE DEAD TURPLES
+
+
+show serach_path;
+
+IF WE WANT SET SEARCH PATH TO PARTICULAR SCHEMA BELOW COMMANDS WE CAN USE:
+
+set search_path to finance;-------fianance is a schema name
+
+
+You can select the tables from information_schema:instead of public we can use other schema_names:
+
+SELECT * FROM information_schema.tables 
+WHERE table_schema = 'public'
+
+To find the schema information and schema tables:-----schema info
+select * from pg_tables where schemaname='public';
+
+to find the table and table belongs to which schema that information can be get by below command:------tables
+select * from pg_tables where tablename='public';
+
+
+TO DROP SCHEMA BELOW COMMAND:
+
+drop schema if exists schema_name cascade;
+
+---------cascade=> Third, use CASCADE to delete schema and all of its objects, and in turn, all objects that depend on those objects. 
+If you want to delete schema only when it is empty, you can use the RESTRICT option. By default, the DROP SCHEMA uses the RESTRICT option.
+
+Using DROP SCHEMA statement to drop multiple schemas example:===>
+
+DROP SCHEMA IF EXISTS finance, marketing;
+
+
+ create a new role john is seen below:===>
+
+ CREATE ROLE john
+LOGIN 
+PASSWORD 'securePass1';
+
+
+After that, grant all privileges on the books table to the role john:
+GRANT ALL 
+ON books
+TO john;
+Finally, grant the SELECT privilege on the fiction table to the role john:
+GRANT SELECT
+ON fiction
+TO john;
+Now, we are going to revoke the SELECT privilege from the fiction table from the role john with this statement:
+REVOKE SELECT
+ON fiction
+FROM john;
+Or, we can revoke all privileges on the fiction table from the role john by using the REVOKE statement with the ALL option as seen here:
+
+REVOKE ALL
+ON fiction
+FROM john;
+
+
+I can see the current search_path with:
+
+show search_path ;
+And I can set the search_path for the current session with:
+
+set search_path = "$user", public, postgis;
+As well, I can permanently set the search_path for a given database with:
+
+alter database mydb set search_path = "$user", public, postgis ;
+And I can permanently set the search_path for a given role (user) with:
+
+alter role johnny set search_path = "$user", public, postgis ;
+
+To unset any settings of a role or database - the search_path in this particular example:
+
+ALTER ROLE myrole RESET search_path;
+Or:
+
+ALTER DATABASE mydb RESET search_path;
+Or:
+
+ALTER ROLE myrole in DATABASE mydb RESET search_path;
+
+To check the data directory :
+
+show data_directory;
+
+
+
+To check userdata ::::
+
+SELECT * FROM pg_catalog.pg_user;
+or
+\du
+or
+SELECT usename FROM pg_catalog.pg_user;
+or
+SELECT * FROM pg_shadow;
+
+TO list schemas::::
+
+SELECT * FROM pg_catalog.pg_namespace;
+
+
+SELECT * FROM pg_catalog.pg_user where usesysid = 10;
+
+To list out schema and owning:::
+ELECT s.nspname AS table_schema, u.usename AS OWNER FROM pg_catalog.pg_namespace s JOIN pg_catalog.pg_user u ON u.usesysid = s.nspowner ORDER BY table_schema;
+
+
+TO CHECK THE USER PRIVILEGES ::::
+
+SELECT table_schema as schema, table_name as table, privilege_type as privilege
+FROM information_schema.table_privileges
+WHERE grantee = 'postgres';
+
+
